@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating Prediction system</title>
+    <!-- <link rel="stylesheet" href="../static/assets/styles/style.css"> -->
+    <!-- <script src="../static/js/script.js" defer></script> -->
+    <style>
+        html{
+    scroll-behavior: smooth;
+}
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: sans-serif;
+    overflow-x: hidden;
+    color: white;
+    
+}
+
+.container{
+    /* background-color: rgb(21, 21, 21); */
+    /* color: white; */
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fHJlc3RhdXJhbnQlMjBmb29kfGVufDB8fDB8fA%3D%3D&w=1000&q=80');
+	background-repeat: no-repeat;
+  background-size: auto;
+  background-size:100% 100%;
+  /* -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+  position: fixed;
+  width: 100%;
+  height: 700px;
+  top: 0;
+  left: 0;
+  z-index: -1; */
+}
+
+h1,h3{
+    margin: 0;
+}
+
+.hero{
+    position: relative;
+    left: 0;
+    top: 0;
+    min-height: 100vh;
+    max-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image:linear-gradient(to top, rgba(0, 0, 0, 0.372),rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.395)), url('./../images/j2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    font-weight: normal;
+}
+
+.goBtn{
+    height: 40px;
+    width: 400px;
+    margin-top: 20px;
+}
+.goBtn button{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    border: none;
+    font-size: 18px;
+    color: white;
+    background-color: black;
+}
+
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.158);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.navbar .nav-items{
+    padding-right: 110px;
+    width: 20%;
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.navbar .nav-items a{
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.form-wrapper{
+    width: 100vw;
+    min-height: 110vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.heading {
+    font-size: 3rem;
+    margin-top: 30px;
+}
+
+.heading-md{
+    font-size: 1.3rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    position: absolute;
+    left: 10%;
+    top: 30%;
+}
+form label {
+  font-size: 22px;
+  font-weight: bold;
+ 
+}
+
+.form-group {
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+}
+.form-group select, input{
+    justify-self: self-start;
+    width: 50%;
+    height: 30px;
+}
+.form-group input{
+    height: 25px;
+    width: 48%;
+}
+.form-group .submit, .reset {
+    padding: 10px;
+    width: 30%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.submit{
+    background-color: rgb(3, 183, 3);
+}
+.reset{
+    background-color: gold;
+}
+
+.pred {
+    position: absolute;
+    right: 10%;
+    top: 30%;
+    border: 1px solid white;
+    padding: 20px;
+    background-color: white;
+    color: black;
+    width: 400px;
+    float: left;
+}
+@media (max-width: 768px) {
+    .pred {
+        position: static;
+        float: none;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+.pred #rating{
+  font-size: 17px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+  gap: 10px;
+}
+.pred h3{
+    font-size: 2rem;
+    text-align: center;
+}
+.pred p{
+    text-align: center;
+}
+.form-head{
+    position: absolute;
+    top: 5%;
+    left: 10%;
+}
+
+.stars{
+    display: flex;
+    justify-content: space-around;
+}
+
+.brand-logo{
+    position: absolute;
+    left: 10%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+    color: gold;
+}
+
+#about{
+    min-height:100vh;
+    padding: 0 10%;
+    margin-top:40px;
+    display: grid;
+    place-content: center;
+}
+
+.card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    background-color: rgb(32, 32, 32);
+    padding: 10px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.217);
+    position: relative;
+}
+
+.card .left-side{
+    width: 60%;
+    height: 300px;
+    background-image: url('../images/IMG_0001.jpg');
+    background-size: cover;
+}
+
+.card .right-side {
+    align-self: flex-start;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-side h1 {
+    font-size: 3rem;
+}
+.right-side p{
+    width: 50%;
+}
+
+.social-links{
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+}
+
+.social-links a {
+    border: 1px solid white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    
+    
+}
+
+footer span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+footer a img {
+    height: 15px;
+    width: 20px;
+    margin-right: 5px;
+    
+}
+    </style>
+</head>
+<body onload="addOptions()">
+    <div class="container">
+        <!-- <nav class="navbar">
+            <h4 class="brand-logo">Aadil Maqbool</h4>
+            <ul class="nav-items">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#form">Predictor</a></li>
+                <li><a href="#about">About me</a></li>
+            </ul>
+        </nav> -->
+         <!-- <section class="hero" id="home">
+            <h1>Restaurant Rating Prediction</h1>
+            <a class="goBtn" href="#form">
+                <button>Click Here To Explore</button>
+            </a>
+         </section>    -->
+        <div>
+         <section class="form-wrapper" id="form">
+            <div class="form-head">
+                <h1 class="heading">Welcome to Rating Predictor</h1>
+                <p class="heading-md">
+                    Enter the details and get the Rating (:
+                </p>
+            </div>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Restaurant type</label>
+                    <select class="form-item" id="RT" name="rest_type">
+                        <option>select here</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cuisines</label>
+                    <select class="form-item" id="C" name="cuisines">
+                        <option>select here</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Online order facility</label>
+                    <select name="online_order" id="OO" required>
+                        <option>-Select-</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                </div>
+                <div class="form-group">
+                    <label>Book table facility</label>
+                    <select name="book_table" id="BT" required>
+                        <option>-Select-</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select name="location" class="form-item" id="L">
+                        <option>select here</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Cost for people</label>
+                    <input  type="number" name="approx_cost" id="approx_cost" class="form-item" min="300" placeholder="- Enter Cost -" required />
+                </div>
+                <div class="form-group">
+                    <label>No. of votes</label>
+                    <input type="number" name="votes" id="votes" class="form-item" />
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="submit"  onclick="() => {
+                        alert('ok')
+                        // window.location.href = '/#form'
+                    }">Submit</button>
+                    <button type="reset" class="reset">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div>
+            <!-- PREDICTOR -->
+            <div class="pred">
+                <h3>Result</h3>
+                <p id="pred-text">Expected Rating</p>
+                <hr id="hr2">
+                <p id="rating">
+                    <span id="stars"></span>
+                    <span id="finalOutput">{{prediction_text}}</span>
+                </p>
+
+            </div>
+        </div>
+         </section>
+
+        
+    </div>
+    <footer>
+        <span>Created by Gopal Singh Chouhan</span>
+        <p>Connect with me:
+            <a href="https://www.linkedin.com/in/gopal-singh-chouhan-89069b233/" target="blank"><img
+                    src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" height="15" width="20" /></a>
+            <a href="https://github.com/gopsa2001" target="blank"><img
+                    src="https://www.vectorlogo.zone/logos/github/github-tile.svg" alt="GitHub" height="15" width="20" /></a>
+            <a href="https://www.instagram.com/_gopsa/"><img
+                    src="https://www.freepnglogos.com/uploads/logo-ig-png/logo-ig-png-instagram-logo-camel-productions-website-25.png"
+                    height="15" width="20" /></a>
+            <a href="mailto:gopsa2001@gmail.com"><img
+                    src="https://seeklogo.com/images/G/gmail-new-2020-logo-32DBE11BB4-seeklogo.com.png" height="15"
+                    width="20" /></a>
+        </p> 
+    </footer>
+<script>
+    function addOptions()
+{
+    // Adding Restaurant Types
+    const restTypes = [ 'Lounge', 'Kiosk', 'Food Truck', 'Irani Cafee',
+                        'Confectionery', 'Cafe', 'Microbrewery', 'Dhaba', 'Takeaway', 'Pop Up',
+                        'Pub', 'Bar', 'Delivery', 'Meat Shop', 'Beverage Shop', 'Dessert Parlor',
+                        'Club', 'Quick Bites', 'Bhojanalya', 'Casual Dining', 'Fine Dining', 'Mess',
+                        'Sweet Shop', 'Food Court', 'Bakery'];
+
+    let dropdown = document.getElementById("RT");
+
+    for(let i = 0; i < restTypes.length; i++)
+    {
+        dropdown.options[dropdown.options.length] = new Option(restTypes[i], restTypes[i]);
+    }
+
+
+    // Adding Cuisines
+    const cuisines = [ "Rajasthani", "Mediterranean", "Desserts", "Burmese",
+                        "Tibetan", "Belgian", "Seafood", "Raw Meats", "Greek", "African", "Russian",
+                        "Italian", "Grill", "Korean", "Ice Cream", "Coffee", "Spanish", "Nepalese",
+                        "Afghani", "Momos", "Bar Food", "South American", "Middle Eastern", "Malaysian",
+                        "Salad", "Bubble Tea", "German", "Bohri", "Asian", "Hyderabadi", "Tamil", "Turkish",
+                        "Arabian", "Sushi", "Awadhi", "Kerala", "Bengali", "Afghan", "Andhra", "Konkan",
+                        "Indonesian", "Street Food", "Goan", "Chinese", "BBQ", "Wraps", "Continental", 
+                        "Lucknowi", "Bihari", "Sandwich", "Cantonese", "Paan", "Charcoal Chicken", "Iranian",
+                        "Portuguese", "Parsi", "Lebanese", "Sindhi", "Naga", "Rolls", "Mithai", "Hot dogs",
+                        "Finger Food", "Thai", "Burger", "Juices", "Healthy Food", "Roast Chicken", "Pan Asian",
+                        "Assamese", "Vegan", "Tex-Mex", "Vietnamese", "Mughlai", "Gujarati", "Modern Indian",
+                        "Steak", "Mongolian", "American", "North Eastern", "Jewish", "North Indian", "European",
+                        "French", "Japanese", "Drinks Only", "Tea", "South Indian", "Indian", "Australian", 
+                        "Malwani", "Fast Food", "Beverages", "Kebab", "Kashmiri", "Sri Lankan", "Oriya", 
+                        "Mangalorean", "Singaporean", "Maharashtrian", "Mexican", "British", "Pizza", "Biryani",
+                        "Chettinad"];
+
+    dropdown = document.getElementById("C");
+
+    for(let i = 0; i < cuisines.length; i++)
+    {
+        dropdown.options[dropdown.options.length] = new Option(cuisines[i], cuisines[i]);
+    }
+
+
+    // Adding Locations
+    const locations = ['BTM', 'Banashankari', 'Banaswadi', 'Bannerghatta Road', 'Basavanagudi',
+                        'Basaveshwara Nagar', 'Bellandur', 'Bommanahalli', 'Brigade Road',
+                        'Brookefield', 'CV Raman Nagar', 'Central Bangalore', 'Church Street',
+                        'City Market', 'Commercial Street', 'Cunningham Road', 'Domlur',
+                        'East Bangalore', 'Ejipura', 'Electronic City', 'Frazer Town',
+                        'HBR Layout', 'HSR', 'Hebbal', 'Hennur', 'Hosur Road',
+                        'ITPL Main Road, Whitefield', 'Indiranagar', 'Infantry Road',
+                        'JP Nagar', 'Jakkur', 'Jalahalli', 'Jayanagar', 'Jeevan Bhima Nagar',
+                        'KR Puram', 'Kaggadasapura', 'Kalyan Nagar', 'Kammanahalli',
+                        'Kanakapura Road', 'Kengeri', 'Koramangala', 'Koramangala 1st Block',
+                        'Koramangala 2nd Block', 'Koramangala 3rd Block',
+                        'Koramangala 4th Block', 'Koramangala 5th Block',
+                        'Koramangala 6th Block', 'Koramangala 7th Block',
+                        'Koramangala 8th Block', 'Kumaraswamy Layout', 'Langford Town',
+                        'Lavelle Road', 'MG Road', 'Magadi Road', 'Majestic', 'Malleshwaram',
+                        'Marathahalli', 'Mysore Road', 'Nagarbhavi', 'Nagawara', 'New BEL Road',
+                        'North Bangalore', 'Old Airport Road', 'Old Madras Road', 'Peenya',
+                        'RT Nagar', 'Race Course Road', 'Rajajinagar', 'Rajarajeshwari Nagar',
+                        'Rammurthy Nagar', 'Residency Road', 'Richmond Road', 'Sadashiv Nagar',
+                        'Sahakara Nagar', 'Sanjay Nagar', 'Sankey Road', 'Sarjapur Road',
+                        'Seshadripuram', 'Shanti Nagar', 'Shivajinagar', 'South Bangalore',
+                        'St. Marks Road', 'Thippasandra', 'Ulsoor', 'Uttarahalli',
+                        'Varthur Main Road, Whitefield', 'Vasanth Nagar', 'Vijay Nagar',
+                        'West Bangalore', 'Whitefield', 'Wilson Garden', 'Yelahanka',
+                        'Yeshwantpur'];
+
+    dropdown = document.getElementById("L");
+
+    for(let i = 0; i < locations.length; i++)
+    {
+        dropdown.options[dropdown.options.length] = new Option(locations[i], locations[i]);
+    }
+}
+
+let output = document.getElementById("finalOutput");
+let starsContainer = document.getElementById("stars");
+let counter = output.innerText.split('.')[0];
+console.log(counter)
+if(output.innerText !== ''){
+    // window.location.href = "/#form";
+    starsContainer.innerHTML = '';
+    for(let i=0; i<counter; i++) {
+        starsContainer.innerHTML += `<span><svg  width="24" height="24" viewBox="0 0 24 24" fill="gold" stroke="gold" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        </span>`
+    }
+}
+</script>
+</body>
+</html>
